@@ -42,5 +42,5 @@ import {
     IconHistory,
     IconUser
 } from "@arco-design/web-vue/es/icon";
-const props = defineProps({defaultKey: String});
+const props = defineProps({ defaultKey: String });
 </script>
