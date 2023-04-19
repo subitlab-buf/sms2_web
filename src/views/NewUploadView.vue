@@ -20,7 +20,7 @@
                             </AFormItem>
                             <AFormItem field="dateRange" label="申请投放日期" required>
                                 <ARangePicker v-model="form.dateRange" :disabled-date="disabledDate" @select="onSelect"
-                                    @popup-visible-change="onPopupVisibleChange" @clear="onClear" />
+                                    @clear="onClear" />
                                 <template #extra>
                                     <div>选择海报投放日期（不超过7天）</div>
                                 </template>
