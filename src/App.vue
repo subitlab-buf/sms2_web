@@ -9,6 +9,6 @@
 
 <script setup>
 import "@arco-design/web-vue";
-import MenuSider from "./components/MenuSiderComponent.vue"
+import MenuSider from "./components/MenuSiderComponent.vue";
 const path = window.location.pathname.replaceAll('/', '');
 </script>

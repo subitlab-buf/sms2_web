@@ -12,4 +12,4 @@ module.exports = {
         indent: [1, 4],
         semi: 1,
     }
-}
+};

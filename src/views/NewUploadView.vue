@@ -54,7 +54,7 @@
 
 <script setup>
 import { reactive } from "vue";
-import "@arco-design/web-vue"
+import "@arco-design/web-vue";
 import UserPathHeader from "../components/UserPathHeaderComponent.vue";
 import { Modal, Message } from "@arco-design/web-vue";
 import dayjs from "dayjs";
@@ -82,7 +82,7 @@ const handleSubmit = (data) => {
     Modal.confirm({
         title: 'handleSubmit',
         content: '1234567890',
-    })
+    });
 };
 const disabledDate = (current) => {
     const dateRange = form.dateRange;
@@ -98,7 +98,7 @@ const disabledDate = (current) => {
 const onSelect = (dateString) => {
     form.dateRange = [dateString[dateString.length === 1 ? 0 : 1], ""];
 };
-const onClear = () => { form.dateRange = ["", ""]; }
+const onClear = () => { form.dateRange = ["", ""]; };
 </script>
 
 <style scoped>
