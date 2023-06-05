@@ -9,7 +9,7 @@ import '@arco-design/web-vue/dist/arco.css';
 
 
 import './assets/main.css';
-import {store} from "@/store";
+import {store} from "./store/index.js";
 
 const app = createApp(App);
 
