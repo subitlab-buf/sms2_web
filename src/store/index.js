@@ -27,7 +27,7 @@ export const store = createStore({
         isLoginStatic: function (state, getters) {
             return getters.info !== "";
         },
-        username: function (state, getters) {
+        accountId: function (state, getters) {
             return getters.parsePayload[1];
         },
         token: function (state, getters) {
@@ -35,9 +35,9 @@ export const store = createStore({
         },
     },
     mutations: {
-        setLogin: function (state, token, username) {
+        setLogin: function (state, token, accountId) {
             let info = Buffer
-                .from(token + '.' + username, 'utf-8')
+                .from(token + '.' + accountId, 'utf-8')
                 .toString('base64');
             state.info = info;
             localStorage.setItem("info", info);
