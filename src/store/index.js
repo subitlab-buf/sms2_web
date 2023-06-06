@@ -30,6 +30,9 @@ export const store = createStore({
         username: function (state) {
             return this.parsePayload(state)[1];
         },
+        token: function (state) {
+            return this.parsePayload(state)[0];
+        },
     },
     mutations: {
         setLogin: function (state, token, username) {
