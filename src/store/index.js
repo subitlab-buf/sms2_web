@@ -18,20 +18,20 @@ export const store = createStore({
             }
             return "";
         },
-        parsePayload: function (state) {
+        parsePayload: function (state, getters) {
             return Buffer
-                .from(this.token(state), 'base64')
+                .from(getters.info, 'base64')
                 .toString('utf-8')
                 .split('.');
         },
-        isLoginStatic: function (state) {
-            return this.info(state) !== "";
+        isLoginStatic: function (state, getters) {
+            return getters.info !== "";
         },
-        username: function (state) {
-            return this.parsePayload(state)[1];
+        username: function (state, getters) {
+            return getters.parsePayload[1];
         },
-        token: function (state) {
-            return this.parsePayload(state)[0];
+        token: function (state, getters) {
+            return getters.parsePayload[0];
         },
     },
     mutations: {
