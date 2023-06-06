@@ -1,44 +1,47 @@
-import {createStore} from "vuex";
-import {Buffer} from "buffer";
+import { createStore } from "vuex";
+import { Buffer } from "buffer";
 
 export const store = createStore({
     state() {
         return {
-            token: "",
+            info: "",
         };
     },
     getters: {
-        token: function (state) {
-            if (state.token !== "") return state.token;
-            let token = localStorage.getItem("token");
-            if (token != null) {
-                state.token = token;
-                // console.log(state,token);
-                return token;
+        info: function (state) {
+            if (state.info !== "") return state.info;
+            let info = localStorage.getItem("info");
+            if (info != null) {
+                state.info = info;
+                // console.log(state,info);
+                return info;
             }
             return "";
         },
         parsePayload: function (state) {
-            return JSON.parse(
-                Buffer
-                    .from(this.token(state).split(".")[1], 'base64')
-                    .toString('utf-8')
-            );
+            return Buffer
+                .from(this.token(state), 'base64')
+                .toString('utf-8')
+                .split('.');
         },
         isLoginStatic: function (state) {
-            return this.token(state) !== "";
+            return this.info(state) !== "";
         },
         username: function (state) {
-            return this.parsePayload(state).username;
+            return this.parsePayload(state)[1];
         },
     },
     mutations: {
-        setLogin: function (state, token) {
-            state.token = token;
-            localStorage.setItem("token", token);
-        }, logout: function (state) {
-            state.token = "";
-            localStorage.setItem("token", "");
+        setLogin: function (state, token, username) {
+            let info = Buffer
+                .from(token + '.' + username, 'utf-8')
+                .toString('base64');
+            state.info = info;
+            localStorage.setItem("info", info);
+        },
+        logout: function (state) {
+            state.info = "";
+            localStorage.setItem("info", "");
         }
     }
 });
