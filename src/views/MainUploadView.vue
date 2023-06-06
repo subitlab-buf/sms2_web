@@ -1,5 +1,5 @@
 <template>
-    <ALayout style="background-color: #f6f6fa;">
+    <ALayout>
         <ALayoutHeader>
             <UserPathHeader path=" 立即投稿" />
         </ALayoutHeader>

@@ -3,7 +3,7 @@
         <ALayoutSider>
             <MenuSider :default-key="path" />
         </ALayoutSider>
-        <RouterView />
+        <RouterView style="background-color: #f6f6fa;" />
     </ALayout>
 </template>
 
