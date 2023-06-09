@@ -28,7 +28,7 @@ export const store = createStore({
             return getters.info !== "";
         },
         accountId: function (state, getters) {
-            return getters.parsePayload[1];
+            return parseInt(getters.parsePayload[1]);
         },
         token: function (state, getters) {
             return getters.parsePayload[0];
@@ -37,7 +37,7 @@ export const store = createStore({
     mutations: {
         setLogin: function (state, token, accountId) {
             let info = Buffer
-                .from(token + '.' + accountId, 'utf-8')
+                .from(token + '.' + accountId.toString(), 'utf-8')
                 .toString('base64');
             state.info = info;
             localStorage.setItem("info", info);
