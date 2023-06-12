@@ -38,7 +38,7 @@
                             <AFormItem field="files" label="上传文件" required>
                                 <AUpload draggable v-model="form.files"
                                     tip="Only pdf, png, jpg can be uploaded, and the size should not exceed 50MB."
-                                    @before-upload="beforeUpload" />
+                                    @before-upload="beforeUpload" :custom-request="customUpload" />
                                 <!--TODO:根据后端API doc添加上传路径-->
                             </AFormItem>
                             <AFormItem>
@@ -58,11 +58,14 @@ import "@arco-design/web-vue";
 import UserPathHeader from "../components/UserPathHeaderComponent.vue";
 import { Modal, Message } from "@arco-design/web-vue";
 import dayjs from "dayjs";
+import API from "../api/axios.js";
+import { store } from "../store/index.js";
 const form = reactive({
     title: "",
     dateRange: ["", ""],
     note: "",
 });
+const picTokens = [];
 const beforeUpload = (file) => {
     return new Promise((resolve, reject) => {
         const fileName = file.name;
@@ -99,6 +102,34 @@ const onSelect = (dateString) => {
     form.dateRange = [dateString[dateString.length === 1 ? 0 : 1], ""];
 };
 const onClear = () => { form.dateRange = ["", ""]; };
+const customUpload = (option) => {
+    API.post('/api/post/upload-image', option.fileItem.file, {
+        headers: {
+            'Token': store.getters.token,
+            'AccountId': store.getters.accountId,
+        },
+        onUploadProgress: function (event) {
+            let percent;
+            if (event.total > 0) {
+                percent = event.loaded / event.total;
+            }
+            option.onProgress(percent, event.event);
+        },
+    })
+        .then(function (response) {
+            let json = JSON.parse(response);
+            if (json.status === 'success') {
+                picTokens.push(json.hash);
+                option.onSuccess(response);
+            } else {
+                option.onError(response);
+                Message.error(json.error);
+            }
+        })
+        .catch(function (e) {
+            option.onError(e.response);
+        });
+};
 </script>
 
 <style scoped>
