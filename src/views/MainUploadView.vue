@@ -41,6 +41,7 @@
                                 </ASpace>
                             </ACard>
                             <AButton type='text' size='small' @click="$router.push('/history')">
+                                <!--BUG: 从这里进入/history页面侧边栏不会更新-->
                                 <div style="font-weight: bold;">查看历史</div>
                                 <IconRightCircle />
                             </AButton>
