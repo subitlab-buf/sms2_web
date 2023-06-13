@@ -32,10 +32,10 @@
                                     <div style="font-size: smaller;">
                                         投稿即遵循
                                         <APopover>
-                                        <ATypographyText>《SubIT大屏使用协议》</ATypographyText>
-                                        <template #content>
-                                            Permission isn't hereby granted.
-                                        </template>
+                                            <ATypographyText>《SubIT大屏使用协议》</ATypographyText>
+                                            <template #content>
+                                                Permission isn't hereby granted.
+                                            </template>
                                         </APopover>
                                     </div>
                                 </ASpace>
@@ -65,9 +65,11 @@ import {
 .card :deep(.arco-card-header) {
     border: 0;
 }
+
 .step :deep(.arco-steps-item-title) {
     font-size: small;
 }
+
 .step {
     line-height: 0.5;
 }
