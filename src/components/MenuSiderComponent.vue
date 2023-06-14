@@ -12,7 +12,7 @@
             </template>
             工作台
         </AMenuItem>
-        <AMenuItem key="new" @click="$router.push('/new')">
+        <AMenuItem key="upload/main" @click="$router.push('/upload/main')">
             <template #icon>
                 <IconShareExternal />
             </template>
