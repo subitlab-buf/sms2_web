@@ -119,7 +119,7 @@ const pictureUpload = (option) => {
         .then(function (response) {
             let json = JSON.parse(response);
             if (json.status === 'success') {
-                picTokens.push(json.hash);
+                picTokens[option.fileItem.uid] = json.hash;
                 option.onSuccess(response);
             } else {
                 option.onError(response);
