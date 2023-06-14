@@ -65,7 +65,7 @@ const form = reactive({
     dateRange: ["", ""],
     note: "",
 });
-const picTokens = [];
+const picTokens = {};
 const beforeUpload = (file) => {
     return new Promise((resolve, reject) => {
         const fileName = file.name;
@@ -130,6 +130,12 @@ const pictureUpload = (option) => {
             option.onError(e.response);
         });
 };
+const beforeRemove = (fileItem) => {
+    return new Promise((resolve, reject) => {
+        delete (picTokens[fileItem.uid]);
+        resolve(true);
+    })
+}
 </script>
 
 <style scoped>
