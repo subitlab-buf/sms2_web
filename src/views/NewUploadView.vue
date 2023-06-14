@@ -36,7 +36,7 @@
                                 </template>
                             </AFormItem>
                             <AFormItem field="files" label="上传文件" required>
-                                <AUpload draggable v-model="form.files"
+                                <AUpload draggable @before-remove="beforeRemove" image-preview
                                     tip="Only pdf, png, jpg can be uploaded, and the size should not exceed 50MB."
                                     @before-upload="beforeUpload" :custom-request="pictureUpload" />
                                 <!--TODO:根据后端API doc添加上传路径-->
