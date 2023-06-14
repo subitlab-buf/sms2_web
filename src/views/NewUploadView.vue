@@ -38,7 +38,7 @@
                             <AFormItem field="files" label="上传文件" required>
                                 <AUpload draggable v-model="form.files"
                                     tip="Only pdf, png, jpg can be uploaded, and the size should not exceed 50MB."
-                                    @before-upload="beforeUpload" :custom-request="customUpload" />
+                                    @before-upload="beforeUpload" :custom-request="pictureUpload" />
                                 <!--TODO:根据后端API doc添加上传路径-->
                             </AFormItem>
                             <AFormItem>
@@ -102,7 +102,7 @@ const onSelect = (dateString) => {
     form.dateRange = [dateString[dateString.length === 1 ? 0 : 1], ""];
 };
 const onClear = () => { form.dateRange = ["", ""]; };
-const customUpload = (option) => {
+const pictureUpload = (option) => {
     API.post('/api/post/upload-image', option.fileItem.file, {
         headers: {
             'Token': store.getters.token,
