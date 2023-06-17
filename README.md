@@ -22,6 +22,12 @@ npm install
 npm run dev
 ```
 
+### Expose to LAN while developing
+
+```sh
+npm run expose
+```
+
 ### Compile and Minify for Production
 
 ```sh
