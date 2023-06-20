@@ -11,14 +11,14 @@
                         <template #title>
                             新增投稿
                         </template>
-                        <AForm :model="form" style="width: 50vw;" @submit="handleSubmit">
+                        <AForm :model="form" style="width: 50vw;" @submit="handleSubmit" ref="postForm">
                             <AFormItem field="title" label="标题" required>
                                 <AInput v-model="form.title" placeholder="请输入申请审核内容的标题" />
                                 <template #extra>
                                     <div>例：行知学院-xx组-xx活动宣传</div>
                                 </template>
                             </AFormItem>
-                            <AFormItem field="dateRange" label="申请投放日期" required>
+                            <AFormItem field="dateRange" label="申请投放日期" required :rules="rules">
                                 <ARangePicker v-model="form.dateRange" :disabled-date="disabledDate" @select="onSelect"
                                     @clear="onClear" />
                                 <template #extra>
@@ -60,6 +60,9 @@ import { Modal, Message } from "@arco-design/web-vue";
 import dayjs from "dayjs";
 import API from "../api/axios.js";
 import { store } from "../store/index.js";
+import router from "../router/index.js";
+import { ref } from "vue";
+const postForm = ref(null);
 const form = reactive({
     title: "",
     dateRange: ["", ""],
@@ -134,8 +137,18 @@ const beforeRemove = (fileItem) => {
     return new Promise((resolve, reject) => {
         delete (picTokens[fileItem.uid]);
         resolve(true);
-    })
-}
+    });
+};
+const rules = [{
+    validator: (value, cb) => {
+        return new Promise(resolve => {
+            if (form.dateRange[0] == "" || form.dateRange[1] == "") {
+                cb('dateRange is required');
+            }
+            resolve();
+        });
+    }
+}];
 </script>
 
 <style scoped>
