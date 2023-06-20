@@ -42,7 +42,10 @@
                                 <!--TODO:根据后端API doc添加上传路径-->
                             </AFormItem>
                             <AFormItem>
-                                <AButton html-type="submit">确认提交</AButton>
+                                <APopconfirm content="Are you sure?" ok-text="Yes" cancel-text="No" position="right"
+                                    @ok="handleSubmit()">
+                                    <AButton>确认提交</AButton>
+                                </APopconfirm>
                             </AFormItem>
                         </AForm>
                     </ACard>
@@ -56,7 +59,7 @@
 import { reactive } from "vue";
 import "@arco-design/web-vue";
 import UserPathHeader from "../components/UserPathHeaderComponent.vue";
-import { Modal, Message } from "@arco-design/web-vue";
+import { Message } from "@arco-design/web-vue";
 import dayjs from "dayjs";
 import API from "../api/axios.js";
 import { store } from "../store/index.js";
@@ -68,7 +71,8 @@ const form = reactive({
     dateRange: ["", ""],
     note: "",
 });
-const picTokens = {};
+const picTokens = [];
+const picUid = []; //Local uid
 const beforeUpload = (file) => {
     return new Promise((resolve, reject) => {
         const fileName = file.name;
@@ -84,11 +88,32 @@ const beforeUpload = (file) => {
         }
     });
 };
-const handleSubmit = (data) => {
-    Modal.confirm({
-        title: 'handleSubmit',
-        content: '1234567890',
+const handleSubmit = () => {
+    var shouldReturn = false;
+    postForm.value.validate().then((res) => {
+        if (res != void 0) shouldReturn = true;
     });
+    if (shouldReturn) return;
+    API.post('/api/post/create', {
+        title: form.title,
+        description: form.note,
+        time_range: form.dateRange,
+        images: picTokens,
+    }, {
+        headers: {
+            'Token': store.getters.token,
+            'AccountId': store.getters.accountId,
+        }
+    })
+        .then(function (response) {
+            let json = JSON.parse(response);
+            if (json.status == 'success') {
+                Message.success("提交成功");
+                router.push('/upload/main');
+            } else {
+                Message.error(json.error);
+            }
+        });
 };
 const disabledDate = (current) => {
     const dateRange = form.dateRange;
@@ -122,7 +147,8 @@ const pictureUpload = (option) => {
         .then(function (response) {
             let json = JSON.parse(response);
             if (json.status === 'success') {
-                picTokens[option.fileItem.uid] = json.hash;
+                picUid.push(option.fileItem.uid);
+                picTokens.push(json.hash);
                 option.onSuccess(response);
             } else {
                 option.onError(response);
@@ -134,8 +160,9 @@ const pictureUpload = (option) => {
         });
 };
 const beforeRemove = (fileItem) => {
-    return new Promise((resolve, reject) => {
-        delete (picTokens[fileItem.uid]);
+    return new Promise((resolve) => {
+        delete (picTokens[picUid.indexOf(fileItem.uid)]);
+        delete (picUid.indexOf(fileItem.uid));
         resolve(true);
     });
 };
