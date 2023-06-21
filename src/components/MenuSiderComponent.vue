@@ -47,7 +47,7 @@ const props = defineProps({ defaultKey: String });
 
 <style scoped>
 .menu :deep(.arco-menu-item.arco-menu-selected) {
-    background-color: rgb(255, 0, 0);
+    background-color: #165DFF;
     color: #ffffff;
 }
 
