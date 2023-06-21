@@ -5,14 +5,14 @@
         <img src="@/assets/SubIT.svg" style="height: 17px;">
         <ATypographyText bold style="font-size: 17px;">大屏管理系统</ATypographyText>
     </ASpace>
-    <AMenu :default-selected-keys="[props.defaultKey]">
+    <AMenu :default-selected-keys="[props.defaultKey]" class="menu">
         <AMenuItem key="workbench" @click="$router.push('/workbench')">
             <template #icon>
                 <IconDashboard />
             </template>
             工作台
         </AMenuItem>
-        <AMenuItem key="upload/main" @click="$router.push('/upload/main')">
+        <AMenuItem key="upload" @click="$router.push('/upload/main')">
             <template #icon>
                 <IconShareExternal />
             </template>
@@ -44,3 +44,14 @@ import {
 } from "@arco-design/web-vue/es/icon";
 const props = defineProps({ defaultKey: String });
 </script>
+
+<style scoped>
+.menu :deep(.arco-menu-item.arco-menu-selected) {
+    background-color: rgb(255, 0, 0);
+    color: #ffffff;
+}
+
+.menu :deep(.arco-menu-item.arco-menu-selected .arco-icon) {
+    color: #ffffff;
+}
+</style>
