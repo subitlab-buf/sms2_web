@@ -12,6 +12,7 @@
                             7天内没有投稿
                         </template>
                         <ASpace direction='vertical' style="width: 100%;" size='large'>
+                            <!--TODO: 对接后端-->
                             <ASpace>
                                 博雅学院xx活动宣传
                                 <ASteps type='dot' :current="2" class="step">
